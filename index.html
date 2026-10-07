@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Dad!</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 500px;
+      padding: 30px;
+      border-radius: 24px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+      text-align: center;
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+    .active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Keypad Styles */
+    .pin-display {
+      font-size: 32px;
+      letter-spacing: 12px;
+      margin: 20px 0;
+      color: #333;
+      font-weight: bold;
+    }
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+    .keypad button {
+      padding: 16px;
+      font-size: 20px;
+      border: none;
+      border-radius: 50%;
+      background: #f0f3f8;
+      color: #333;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .keypad button:active { background: #d0d7de; }
+
+    /* Main Hub Icons */
+    .hub-grid {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 30px;
+      gap: 15px;
+    }
+    .hub-item {
+      background: #f8f9fa;
+      padding: 20px 15px;
+      border-radius: 16px;
+      cursor: pointer;
+      border: 2px solid #e2e8f0;
+      flex: 1;
+      transition: transform 0.2s;
+    }
+    .hub-item:hover { transform: translateY(-5px); }
+    .hub-icon { font-size: 36px; display: block; margin-bottom: 8px; }
+
+    /* Photo Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .gallery img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    /* Letter Formatting */
+    .letter-box {
+      background: #fdfbf7;
+      border-left: 4px solid #6b46c1;
+      padding: 20px;
+      text-align: left;
+      border-radius: 8px;
+      line-height: 1.6;
+      font-size: 15px;
+      color: #2d3748;
+      max-height: 300px;
+      overflow-y: auto;
+      margin: 20px 0;
+    }
+
+    .btn {
+      background: #6b46c1;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .btn:hover { background: #553c9a; }
+  </style>
+</head>
+<body>
+
+  <!-- 1. PASSCODE SCREEN -->
+  <div class="card active" id="screen-lock">
+    <h2>Enter Passcode 🔒</h2>
+    <p style="color: #666; font-size: 14px;">Enter the special 4-digit code to unlock</p>
+    <div class="pin-display" id="pin-display">____</div>
+    <div class="keypad">
+      <button onclick="press('1')">1</button>
+      <button onclick="press('2')">2</button>
+      <button onclick="press('3')">3</button>
+      <button onclick="press('4')">4</button>
+      <button onclick="press('5')">5</button>
+      <button onclick="press('6')">6</button>
+      <button onclick="press('7')">7</button>
+      <button onclick="press('8')">8</button>
+      <button onclick="press('9')">9</button>
+      <button onclick="clearPin()">C</button>
+      <button onclick="press('0')">0</button>
+      <button onclick="checkPin()">✓</button>
+    </div>
+  </div>
+
+  <!-- 2. MAIN HUB (Select Photo or Letter) -->
+  <div class="card" id="screen-hub">
+    <h1>🎉 Happy Birthday, Dad! 🎉</h1>
+    <p>Click on each item to open your surprise:</p>
+    <div class="hub-grid">
+      <div class="hub-item" onclick="showScreen('screen-memories')">
+        <span class="hub-icon">📸</span>
+        <strong>Memories</strong>
+      </div>
+      <div class="hub-item" onclick="showScreen('screen-letter')">
+        <span class="hub-icon">✉️</span>
+        <strong>Letter</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. MEMORIES PHOTO GALLERY -->
+  <div class="card" id="screen-memories">
+    <h2>Our Best Memories 📸</h2>
+    <div class="gallery">
+      <!-- Replace image links with your photos -->
+      <img src="https://via.placeholder.com/200?text=Dad+Memory+1" alt="Memory 1">
+      <img src="https://via.placeholder.com/200?text=Dad+Memory+2" alt="Memory 2">
+      <img src="https://via.placeholder.com/200?text=Dad+Memory+3" alt="Memory 3">
+      <img src="https://via.placeholder.com/200?text=Dad+Memory+4" alt="Memory 4">
+    </div>
+    <button class="btn" onclick="showScreen('screen-hub')">Back to Main Menu</button>
+  </div>
+
+  <!-- 4. LETTER SECTION -->
+  <div class="card" id="screen-letter">
+    <h2>A Letter For You ✉️</h2>
+    <div class="letter-box">
+      <p>Dear Dad,</p>
+      <p>Happy Birthday! Thank you for everything you do for our family and for always being there for me.</p>
+      <p>[You can add the letter you mentioned right here!]</p>
+      <p>With love,</p>
+    </div>
+    <button class="btn" onclick="showScreen('screen-thanks')">Continue</button>
+  </div>
+
+  <!-- 5. FINAL THANK YOU SCREEN -->
+  <div class="card" id="screen-thanks">
+    <h1 style="font-size: 40px; margin-bottom: 10px;">❤️</h1>
+    <h2>Thank You!</h2>
+    <p style="font-size: 18px; color: #4a5568; margin-top: 15px;">
+      Thank you for being the best father anyone could ask for. Hope you have a wonderful birthday!
+    </p>
+    <button class="btn" onclick="showScreen('screen-hub')">Replay Memories</button>
+  </div>
+
+  <script>
+    // Set your 4-digit passcode here (e.g., birthday date like '1210')
+    const CORRECT_PIN = "1234"; 
+    let currentPin = "";
+
+    function press(digit) {
+      if (currentPin.length < 4) {
+        currentPin += digit;
+        updateDisplay();
+      }
+    }
+
+    function clearPin() {
+      currentPin = "";
+      updateDisplay();
+    }
+
+    function updateDisplay() {
+      document.getElementById("pin-display").innerText = currentPin.padEnd(4, "_");
+    }
+
+    function checkPin() {
+      if (currentPin === CORRECT_PIN) {
+        showScreen('screen-hub');
+      } else {
+        alert("Incorrect passcode! Try again.");
+        clearPin();
+      }
+    }
+
+    function showScreen(screenId) {
+      document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+      document.getElementById(screenId).classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
