@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday Dad!</title>
+  <title>A Special Surprise</title>
   <style>
     * {
       box-sizing: border-box;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     body {
-      background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+      background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
       margin: 0;
       min-height: 100vh;
       display: flex;
@@ -21,7 +21,7 @@
     .card {
       background: #ffffff;
       width: 100%;
-      max-width: 500px;
+      max-width: 480px;
       padding: 30px;
       border-radius: 24px;
       box-shadow: 0 12px 30px rgba(0,0,0,0.15);
@@ -36,54 +36,83 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Keypad Styles */
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      background: #6b46c1;
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .btn:hover { transform: scale(1.05); background: #553c9a; }
+    .btn-secondary { background: #e2e8f0; color: #4a5568; }
+
+    /* Keypad */
+    .hint-text {
+      color: #6b46c1;
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 5px;
+    }
     .pin-display {
       font-size: 32px;
       letter-spacing: 12px;
-      margin: 20px 0;
+      margin: 15px 0;
       color: #333;
       font-weight: bold;
     }
     .keypad {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      max-width: 280px;
+      gap: 12px;
+      max-width: 260px;
       margin: 0 auto;
     }
     .keypad button {
-      padding: 16px;
+      padding: 15px;
       font-size: 20px;
       border: none;
       border-radius: 50%;
       background: #f0f3f8;
-      color: #333;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.2s;
     }
-    .keypad button:active { background: #d0d7de; }
 
-    /* Main Hub Icons */
+    /* Option Cards */
     .hub-grid {
       display: flex;
       justify-content: space-around;
-      margin-top: 30px;
+      margin-top: 25px;
       gap: 15px;
     }
     .hub-item {
       background: #f8f9fa;
-      padding: 20px 15px;
-      border-radius: 16px;
+      padding: 20px 10px;
+      border-radius: 20px;
       cursor: pointer;
       border: 2px solid #e2e8f0;
       flex: 1;
       transition: transform 0.2s;
     }
     .hub-item:hover { transform: translateY(-5px); }
-    .hub-icon { font-size: 36px; display: block; margin-bottom: 8px; }
+    .hub-item img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
 
-    /* Photo Gallery */
+    /* Gallery */
     .gallery {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -92,12 +121,12 @@
     }
     .gallery img {
       width: 100%;
-      height: 140px;
+      height: 120px;
       object-fit: cover;
       border-radius: 12px;
     }
 
-    /* Letter Formatting */
+    /* Letter Box */
     .letter-box {
       background: #fdfbf7;
       border-left: 4px solid #6b46c1;
@@ -105,32 +134,24 @@
       text-align: left;
       border-radius: 8px;
       line-height: 1.6;
-      font-size: 15px;
-      color: #2d3748;
-      max-height: 300px;
+      max-height: 250px;
       overflow-y: auto;
       margin: 20px 0;
     }
 
-    .btn {
-      background: #6b46c1;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 20px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 15px;
+    .hug-gif {
+      width: 200px;
+      border-radius: 15px;
+      margin: 15px 0;
     }
-    .btn:hover { background: #553c9a; }
   </style>
 </head>
 <body>
 
-  <!-- 1. PASSCODE SCREEN -->
+  <!-- SCREEN 1: PASSCODE LOCK (START) -->
   <div class="card active" id="screen-lock">
     <h2>Enter Passcode 🔒</h2>
-    <p style="color: #666; font-size: 14px;">Enter the special 4-digit code to unlock</p>
+    <div class="hint-text">Hint: The Day You Were Born</div>
     <div class="pin-display" id="pin-display">____</div>
     <div class="keypad">
       <button onclick="press('1')">1</button>
@@ -148,61 +169,95 @@
     </div>
   </div>
 
-  <!-- 2. MAIN HUB (Select Photo or Letter) -->
+  <!-- SCREEN 2: INTRO QUESTION -->
+  <div class="card" id="screen-intro">
+    <img src="https://cdn-icons-png.flaticon.com/512/3681/3681962.png" width="90" alt="Gift">
+    <h2>Hey! I made something for you, do you wanna see it? 🎁</h2>
+    <div class="btn-group">
+      <button class="btn" onclick="showScreen('screen-yes-thanks')">Yes!</button>
+      <button class="btn btn-secondary" onclick="showScreen('screen-no')">No</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: IF NO -->
+  <div class="card" id="screen-no">
+    <img src="https://cdn-icons-png.flaticon.com/512/1304/1304038.png" width="80" alt="Sad">
+    <h2>Please... I made this for you! 🥺</h2>
+    <div class="btn-group">
+      <button class="btn" onclick="showScreen('screen-intro')">Go Back</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 4: IF YES / HAPPY BIRTHDAY PAPPA -->
+  <div class="card" id="screen-yes-thanks">
+    <img src="https://cdn-icons-png.flaticon.com/512/2904/2904843.png" width="90" alt="Happy">
+    <h2>Happy Birthday Pappa! 🎉❤️</h2>
+    <p style="color: #666;">Tap below to see your special surprise!</p>
+    <button class="btn" onclick="showScreen('screen-hub')">Continue</button>
+  </div>
+
+  <!-- SCREEN 5: MAIN HUB -->
   <div class="card" id="screen-hub">
-    <h1>🎉 Happy Birthday, Dad! 🎉</h1>
-    <p>Click on each item to open your surprise:</p>
+    <h1>🎉 Birthday Surprise 🎉</h1>
+    <p style="color: #555;">Click on an item to open:</p>
     <div class="hub-grid">
-      <div class="hub-item" onclick="showScreen('screen-memories')">
-        <span class="hub-icon">📸</span>
-        <strong>Memories</strong>
+      <div class="hub-item" onclick="openOption('memories')">
+        <img src="https://cdn-icons-png.flaticon.com/512/2954/2954881.png" alt="Option 1">
+        <div><strong>Click Here</strong></div>
       </div>
-      <div class="hub-item" onclick="showScreen('screen-letter')">
-        <span class="hub-icon">✉️</span>
-        <strong>Letter</strong>
+      <div class="hub-item" onclick="openOption('letter')">
+        <img src="https://cdn-icons-png.flaticon.com/512/3062/3062631.png" alt="Option 2">
+        <div><strong>Click Here</strong></div>
       </div>
     </div>
   </div>
 
-  <!-- 3. MEMORIES PHOTO GALLERY -->
-  <div class="card" id="screen-memories">
-    <h2>Our Best Memories 📸</h2>
+  <!-- SCREEN 6: PHOTOS PAGE -->
+  <div class="card" id="screen-photos">
+    <h2>Special Moments 📸</h2>
     <div class="gallery">
-      <!-- Replace image links with your photos -->
-      <img src="https://via.placeholder.com/200?text=Dad+Memory+1" alt="Memory 1">
-      <img src="https://via.placeholder.com/200?text=Dad+Memory+2" alt="Memory 2">
-      <img src="https://via.placeholder.com/200?text=Dad+Memory+3" alt="Memory 3">
-      <img src="https://via.placeholder.com/200?text=Dad+Memory+4" alt="Memory 4">
+      <img src="https://via.placeholder.com/200?text=Dad+Photo+1" alt="Photo 1">
+      <img src="https://via.placeholder.com/200?text=Dad+Photo+2" alt="Photo 2">
+      <img src="https://via.placeholder.com/200?text=Dad+Photo+3" alt="Photo 3">
+      <img src="https://via.placeholder.com/200?text=Dad+Photo+4" alt="Photo 4">
     </div>
-    <button class="btn" onclick="showScreen('screen-hub')">Back to Main Menu</button>
+    <button class="btn" onclick="checkFinishAndReturn()">Back</button>
   </div>
 
-  <!-- 4. LETTER SECTION -->
+  <!-- SCREEN 7: LETTER PAGE -->
   <div class="card" id="screen-letter">
-    <h2>A Letter For You ✉️</h2>
+    <h2>For You, Pappa ✉️</h2>
     <div class="letter-box">
-      <p>Dear Dad,</p>
-      <p>Happy Birthday! Thank you for everything you do for our family and for always being there for me.</p>
-      <p>[You can add the letter you mentioned right here!]</p>
+      <p>Dear Pappa,</p>
+      <p>Happy Birthday! Thank you for always supporting me and being there every step of the way.</p>
+      <p>[Paste your personal letter text here!]</p>
       <p>With love,</p>
     </div>
-    <button class="btn" onclick="showScreen('screen-thanks')">Continue</button>
+    <button class="btn" onclick="checkFinishAndReturn()">Back</button>
   </div>
 
-  <!-- 5. FINAL THANK YOU SCREEN -->
-  <div class="card" id="screen-thanks">
-    <h1 style="font-size: 40px; margin-bottom: 10px;">❤️</h1>
-    <h2>Thank You!</h2>
-    <p style="font-size: 18px; color: #4a5568; margin-top: 15px;">
-      Thank you for being the best father anyone could ask for. Hope you have a wonderful birthday!
-    </p>
-    <button class="btn" onclick="showScreen('screen-hub')">Replay Memories</button>
+  <!-- SCREEN 8: I HOPED YOU LIKED IT -->
+  <div class="card" id="screen-liked-it">
+    <img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" width="90" alt="Heart">
+    <h2>I hope you liked it! ❤️</h2>
+    <p style="color: #666;">I have one last thing for you...</p>
+    <button class="btn" onclick="showScreen('screen-hug')">Next</button>
+  </div>
+
+  <!-- SCREEN 9: VIRTUAL HUG GIF -->
+  <div class="card" id="screen-hug">
+    <h2>Virtual Hug Loading... 🤗</h2>
+    <img class="hug-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnFlcDE3MG4zb3FmNmt2ZHhhMnExMThzcGgzeTlrdW5sdndxbnAxdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3M4NpbLCTxBqU/giphy.gif" alt="Virtual Hug GIF">
+    <div style="margin-top: 15px;">
+      <button class="btn" onclick="showScreen('screen-hub')">Replay</button>
+    </div>
   </div>
 
   <script>
-    // Set your 4-digit passcode here (e.g., birthday date like '1210')
-    const CORRECT_PIN = "1234"; 
+    const CORRECT_PIN = "0984";
     let currentPin = "";
+    let viewedMemories = false;
+    let viewedLetter = false;
 
     function press(digit) {
       if (currentPin.length < 4) {
@@ -222,7 +277,7 @@
 
     function checkPin() {
       if (currentPin === CORRECT_PIN) {
-        showScreen('screen-hub');
+        showScreen('screen-intro');
       } else {
         alert("Incorrect passcode! Try again.");
         clearPin();
@@ -233,7 +288,25 @@
       document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
       document.getElementById(screenId).classList.add('active');
     }
+
+    function openOption(option) {
+      if (option === 'memories') {
+        viewedMemories = true;
+        showScreen('screen-photos');
+      } else if (option === 'letter') {
+        viewedLetter = true;
+        showScreen('screen-letter');
+      }
+    }
+
+    function checkFinishAndReturn() {
+      if (viewedMemories && viewedLetter) {
+        showScreen('screen-liked-it');
+      } else {
+        showScreen('screen-hub');
+      }
+    }
   </script>
 
 </body>
-</html>
+    </html>
