@@ -163,7 +163,7 @@
 
     /* Scrollable Gallery Container */
     .gallery-container {
-      max-height: 320px;
+      max-height: 340px;
       overflow-y: auto;
       padding: 5px;
       margin-bottom: 15px;
@@ -175,7 +175,7 @@
     }
     .gallery img {
       width: 100%;
-      height: 120px;
+      height: 130px;
       object-fit: cover;
       border-radius: 12px;
       background: #e2e8f0;
@@ -187,11 +187,13 @@
       border-left: 4px solid #6b46c1;
       padding: 20px;
       text-align: left;
-      border-radius: 8px;
+      border-radius: 12px;
       line-height: 1.6;
-      max-height: 280px;
+      max-height: 290px;
       overflow-y: auto;
       margin: 20px 0;
+      color: #333;
+      font-size: 15px;
     }
 
     .hug-gif {
@@ -257,11 +259,11 @@
     <p style="color: #555;">Click on an item to open:</p>
     <div class="hub-grid">
       <div class="hub-item" onclick="openOption('memories')">
-        <img src="https://cdn-icons-png.flaticon.com/512/2954/2954881.png" alt="Option 1">
+        <img src="https://cdn-icons-png.flaticon.com/512/2954/2954881.png" alt="Memories">
         <div><strong>Click Here</strong></div>
       </div>
       <div class="hub-item" onclick="openOption('letter')">
-        <img src="https://cdn-icons-png.flaticon.com/512/3062/3062631.png" alt="Option 2">
+        <img src="https://cdn-icons-png.flaticon.com/512/3062/3062631.png" alt="Letter">
         <div><strong>Click Here</strong></div>
       </div>
     </div>
@@ -299,10 +301,12 @@
   <div class="card" id="screen-letter">
     <h2>For You, Pappa ✉️</h2>
     <div class="letter-box">
-      <p>Dear Pappa,</p>
-      <p>Happy Birthday! Thank you for always supporting me and being there every step of the way.</p>
-      <p>[Paste your personal letter text here!]</p>
-      <p>With love,</p>
+      <p><strong>Dear Pappa,</strong></p>
+      <p>Happy Birthday! ❤️</p>
+      <p>I really wish you could be here with us to celebrate your birthday. It feels a little different when you’re in Singapore and we’re here in India. Even though you come to India often, I still miss you when you’re away.</p>
+      <p>Thank you for always being there for me, supporting me, and helping me whenever I need you. I might not say it all the time, but I really thank you for everything you do for me.</p>
+      <p>I hope you have a great birthday and enjoy your day there. I’m really looking forward to seeing you when you come back. Have a great day and know that we love you.</p>
+      <p>Love you, Pappa.</p>
     </div>
     <button class="btn" onclick="checkFinishAndReturn()">Back</button>
   </div>
@@ -330,16 +334,98 @@
     let viewedMemories = false;
     let viewedLetter = false;
 
-    // Load photo1.jpg through photo78.jpg
-    const totalPhotos = 78;
+    // List of uploaded WhatsApp/Camera photos
+    const photoList = [
+      "IMG-20260917-WA0072(1).jpg",
+      "IMG-20260917-WA0074.jpg",
+      "IMG-20261007-WA0041.jpg",
+      "IMG-20261007-WA0042.jpg",
+      "IMG-20261007-WA0043.jpg",
+      "IMG-20261007-WA0044.jpg",
+      "IMG-20261007-WA0045.jpg",
+      "IMG-20261007-WA0046.jpg",
+      "IMG-20261007-WA0047.jpg",
+      "IMG-20261007-WA0048.jpg",
+      "IMG-20261007-WA0049.jpg",
+      "IMG-20261007-WA0050.jpg",
+      "IMG-20261007-WA0051.jpg",
+      "IMG-20261007-WA0052.jpg",
+      "IMG-20261007-WA0053.jpg",
+      "IMG-20261007-WA0054.jpg",
+      "IMG-20261007-WA0055.jpg",
+      "IMG-20261007-WA0056.jpg",
+      "IMG-20261007-WA0057.jpg",
+      "IMG-20261007-WA0058.jpg",
+      "IMG-20261007-WA0059.jpg",
+      "IMG-20261007-WA0060.jpg",
+      "IMG-20261007-WA0061.jpg",
+      "IMG-20261007-WA0062.jpg",
+      "IMG-20261007-WA0063.jpg",
+      "IMG-20261007-WA0064.jpg",
+      "IMG-20261007-WA0065.jpg",
+      "IMG-20261007-WA0066.jpg",
+      "IMG-20261007-WA0067.jpg",
+      "IMG-20261007-WA0068.jpg",
+      "IMG-20261007-WA0069.jpg",
+      "IMG-20261007-WA0070.jpg",
+      "IMG-20261007-WA0071.jpg",
+      "IMG-20261007-WA0072.jpg",
+      "IMG-20261007-WA0073.jpg",
+      "IMG-20261007-WA0074.jpg",
+      "IMG-20261007-WA0075.jpg",
+      "IMG-20261007-WA0076.jpg",
+      "IMG-20261007-WA0077.jpg",
+      "IMG-20261007-WA0078.jpg",
+      "IMG-20261007-WA0079.jpg",
+      "IMG-20261007-WA0081.jpg",
+      "IMG-20261007-WA0082.jpg",
+      "IMG-20261007-WA0083.jpg",
+      "IMG-20261007-WA0084.jpg",
+      "IMG-20261007-WA0085.jpg",
+      "IMG-20261007-WA0086.jpg",
+      "IMG-20261007-WA0087.jpg",
+      "IMG-20261007-WA0088.jpg",
+      "IMG-20261007-WA0089.jpg",
+      "IMG-20261007-WA0090.jpg",
+      "IMG-20261007-WA0091(1).jpg",
+      "IMG-20261007-WA0091.jpg",
+      "IMG-20261007-WA0092.jpg",
+      "IMG-20261007-WA0093.jpg",
+      "IMG-20261007-WA0094.jpg",
+      "IMG-20261007-WA0095.jpg",
+      "IMG-20261007-WA0096.jpg",
+      "IMG-20261007-WA0097.jpg",
+      "IMG-20261007-WA0098.jpg",
+      "IMG-20261007-WA0099.jpg",
+      "IMG-20261007-WA0100.jpg",
+      "IMG-20261007-WA0101.jpg",
+      "IMG-20261007-WA0102.jpg",
+      "IMG-20261007-WA0103.jpg",
+      "IMG-20261007-WA0104.jpg",
+      "IMG-20261007-WA0105.jpg",
+      "IMG-20261007-WA0106.jpg",
+      "IMG-20261007-WA0107.jpg",
+      "IMG-20261007-WA0108.jpg",
+      "IMG-20261007-WA0109.jpg",
+      "IMG-20261007-WA0110.jpg",
+      "IMG-20261007-WA0111.jpg",
+      "IMG-20261007-WA0112.jpg",
+      "IMG-20261007-WA0113.jpg",
+      "IMG-20261007-WA0114.jpg",
+      "IMG-20261007-WA0115.jpg",
+      "IMG-20261007-WA0116.jpg",
+      "IMG-20261007-WA0117.jpg",
+      "IMG-20261007-WA0118.jpg"
+    ];
+
     const galleryGrid = document.getElementById('gallery-grid');
-    for (let i = 1; i <= totalPhotos; i++) {
+    photoList.forEach((filename, index) => {
       const img = document.createElement('img');
-      img.src = `photo${i}.jpg`;
-      img.alt = `Memory ${i}`;
+      img.src = filename;
+      img.alt = `Memory ${index + 1}`;
       img.loading = "lazy";
       galleryGrid.appendChild(img);
-    }
+    });
 
     function press(digit) {
       if (currentPin.length < 4) {
